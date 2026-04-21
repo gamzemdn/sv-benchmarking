@@ -99,7 +99,7 @@ BAM (HG002 / NA12878)
 
 ## Step-by-Step Usage
 
-### 1. Konfigürasyon
+### 1. Configuration
 
 `scripts/00_config.sh` # define paths according to your system
 
@@ -143,7 +143,7 @@ conda activate svanalyzer
 bash scripts/run_pipeline.sh svanalyzer
 ```
 
-### 5. Tamamını çalıştırmak için
+### 5. Run the full pipeline
 
 ```bash
 conda activate svbenchmark
