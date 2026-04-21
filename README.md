@@ -32,7 +32,7 @@ sv-benchmarking/
 
 ## Data Availability
 
-Tüm veriler kamuya açık kaynaklardan elde edilmiştir. Dosya boyutları nedeniyle ham veriler bu repoda yer almamaktadır. İndirme talimatları için [`data/README.md`](data/README.md) dosyasına bakınız.
+All data has been obtained from publicly available sources. Due to file sizes, the raw data is not included in this repository. See [`data/README.md`](data/README.md) for download instructions.
 
 | Sample | Veri | Kaynak |
 |--------|------|--------|
