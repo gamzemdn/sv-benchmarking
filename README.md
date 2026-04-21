@@ -42,3 +42,21 @@ All data has been obtained from publicly available sources. Due to file sizes, t
 | NA12878 | SV Truth Set (HGSVC2 v1.0) (GRCh37) | [1000 Genomes EBI FTP](https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/HGSVC2/release/v1.0/integrated_callset/) |
 
 ---
+
+## Environment Setup
+
+```bash
+
+# Truvari
+conda env create -f envs/truvari_env.yml
+conda activate truvari
+# EvalSVcallers
+conda env create -f envs/evalsvcallers_env.yml
+conda activate evalsvcallers
+# SVbenchmark
+conda env create -f envs/svbenchmark_env.yml
+conda activate svbenchmark
+
+```
+
+---
