@@ -1,4 +1,4 @@
-name: svanalyzer
+name: svbenchmark
 channels:
   - bioconda
   - conda-forge
