@@ -7,7 +7,7 @@ All data used in this study are publicly available. Raw files are not included i
 
 ## HG002 (GIAB Ashkenazim Trio)
 
-**BAM file (50× HiSeq coverage):**
+**BAM file (50× HiSeq coverage GRCh37):**
 ```bash
 wget https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/HG002_NA24385_son/NIST_HiSeq_HG002_Homogeneity-10953946/HG002Run02-11611685/
 ```
@@ -20,7 +20,7 @@ wget https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/Ashkenazim
 
 ---
 
-## NA12878
+## NA12878 (GRCh38)
 
 **FASTQ reads (SRA: SRR17658585):**
 ```bash
@@ -32,9 +32,3 @@ fasterq-dump SRR17658585
 ```bash
 wget https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/HGSVC2/release/v1.0/integrated_callset/
 ```
-
----
-
-## Reference Genome
-
-hg19 canonical chromosomes were used. Source: [UCSC hg19](https://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/)
