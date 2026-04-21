@@ -15,15 +15,13 @@ sv-benchmarking/
 │   └── evalsvcallers_env.yml
 │   └── svbenchmark_env.yml
 ├── scripts/
-│   ├── 00_config.sh                  # Tüm path ve parametreler
-│   ├── 01_preprocess_truth.sh        # Truth set hazırlama
+│   ├── 00_config.sh                  # paths and parameters
+│   ├── 01_preprocess_truth.sh        # Truth set preprocessing
 │   ├── 02_preprocess_callers.sh      # Caller VCF preprocessing
 │   ├── 03_evaluate_truvari.sh        # Truvari bench
 │   ├── 04_evaluate_evalsvcallers.sh  # EvalSVcallers
 │   ├── 05_evaluate_svbenchmark.sh    # SVbenchmark
-│   └── run_pipeline.sh               # Master script
-├── data/
-│   └── README.md             
+│   └── run_pipeline.sh               # Master script            
 └── results/
     └── figures/              
 ```
@@ -32,7 +30,7 @@ sv-benchmarking/
 
 ## Data Availability
 
-All data has been obtained from publicly available sources. Due to file sizes, the raw data is not included in this repository. See [`data/README.md`](data/README.md) for download instructions.
+All data has been obtained from publicly available sources. Due to file sizes, the raw data is not included in this repository. 
 
 | Sample | Veri | Kaynak |
 |--------|------|--------|
@@ -58,5 +56,101 @@ conda env create -f envs/svbenchmark_env.yml
 conda activate svbenchmark
 
 ```
-
 ---
+
+## Pipeline Overview
+
+```
+BAM (HG002 / NA12878)
+        │
+        ▼
+┌───────────────────┐
+│  SV Callers       │  Manta · Delly · Lumpy · GRIDSS · Wham
+└────────┬──────────┘
+         │  raw VCF
+         ▼
+┌───────────────────────────────────────────────────────────┐
+│  02_preprocess_callers.sh                                 │
+│                                                           │
+│  0. octopusv correct → svcf2vcf                           │
+│  1. SVLEN filter (|SVLEN| ≥ 50 bp)                        │
+│  2. PASS filter                                           │
+│  3. Sort                                                  │
+│  4. Restrict to high-confidence BED regions (HG002 only)  │
+└────────┬──────────────────────────────────────────────────┘
+         │  preprocessed VCF (.final.vcf.gz)
+         │
+         ├──────────────────┬──────────────────┐
+         ▼                  ▼                  ▼
+┌─────────────┐   ┌──────────────────┐   ┌────────────────────┐
+│   Truvari   │   │  EvalSVcallers   │   │    SVbenchmark     │
+│    bench    │   │ convert+overlap  │   │                    │
+└─────────────┘   └──────────────────┘   └────────────────────┘
+         │                  │                  │
+         └──────────────────┴──────────────────┘
+                            │
+                            ▼
+                    results/evaluation/
+                    ├── truvari/
+                    ├── evalsvcallers/
+                    └── svbenchmark/
+```
+---
+
+## Step-by-Step Usage
+
+### 1. Konfigürasyon
+
+`scripts/00_config.sh` # define paths according to your system
+
+```bash
+SAMPLE="HG002"   # HG002 or NA12878
+REF_FA="/path/to/ref.fa"
+BAM="/path/to/HG002.bam"
+TRUTH_VCF="/path/to/HG002_GRCh37_v5.0q_stvar.vcf.gz"
+TRUTH_BED="/path/to/HG002_GRCh37_v5.0q_stvar.benchmark.bed"  # BED file is only available for HG002
+CALLER_DIR="/path/to/caller_outputs"
+OUT_DIR="/path/to/output"
+```
+
+### 2. Truth Set Preprocessing
+
+```bash
+conda activate svbenchmark
+bash scripts/01_preprocess_truth.sh
+```
+
+### 3. Caller VCF Preprocessing
+
+```bash
+# Tek caller:
+bash scripts/02_preprocess_callers.sh manta
+
+# Tüm callerlar:
+bash scripts/run_pipeline.sh callers
+```
+
+### 4. Evaluation
+
+```bash
+# Truvari + EvalSVcallers:
+conda activate svbenchmark
+bash scripts/run_pipeline.sh truvari
+bash scripts/run_pipeline.sh evalsv
+
+# SVAnalyzer (ayrı ortam):
+conda activate svanalyzer
+bash scripts/run_pipeline.sh svanalyzer
+```
+
+### 5. Tamamını çalıştırmak için
+
+```bash
+conda activate svbenchmark
+bash scripts/run_pipeline.sh all
+```
+---
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
