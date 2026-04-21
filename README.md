@@ -2,7 +2,7 @@
 
 This repository contains the preprocessing and benchmarking pipeline used in our study comparing five structural variant (SV) callers — **Manta, Delly, Lumpy, GRIDSS, and Wham** — against validated truth sets for samples HG002 (GIAB) and NA12878 (HGSVC2).
 
-Three independent evaluation frameworks are applied: **Truvari**, **EvalSVcallers**, and **SVAnalyzer**.
+Three independent evaluation frameworks are applied: **Truvari**, **EvalSVcallers**, and **SVbenchmark**.
 
 ---
 ## Repository Structure
